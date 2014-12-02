@@ -32,7 +32,7 @@ Graph::NbhMap Graph::getNeighbourhoodMap() const {
         vertexRow.reserve(m_list.size());
     }
 
-    for (int i = 0; i < m_list.size(); i++) {
+    for (unsigned int i = 0; i < m_list.size(); i++) {
         for (const auto &edge : m_list[i]) {
             // Reminder, that edge.begin() == i
             map[i][edge.end()] = edge.value();

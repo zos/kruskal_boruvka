@@ -41,7 +41,7 @@ public:
     typedef std::vector<std::vector<Value> > NbhMap;
 
     Graph() : m_edgeAmount(0) {}
-    explicit Graph(std::size_t vertexAmount, const std::set<Edge> &edgeSet);
+    Graph(std::size_t vertexAmount, const std::set<Edge> &edgeSet);
     std::size_t getVertexAmount() const;
     long int getEdgeAmount() const;
     NbhList getNeighbourhoodList() const;

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Graph.h"
+#include <Graph.h>
 #include <exception>
 #include <string>
 
@@ -27,25 +27,29 @@ public:
     class GraphNotConnectedException : public std::exception {
     public:
         GraphNotConnectedException() {}
-        virtual ~GraphNotConnectedException() throw() {}
+        ~GraphNotConnectedException() throw() {}
 
-        /** Returns a C-style character string describing the general cause
-         *  of the current error.  */
-        virtual const char* what() const throw() {
+        const char* what() const throw() {
             return "GraphNotConnectedException";
         }
     };
 
-
     GraphGenerator() : m_vertexAmount(0), m_edgeAmount(0), m_tries(0) {}
+
+    void setFile(const std::string &file) { m_file = file; }
     void setVertexAmount(std::size_t vertexAmount);
     void setEdgeAmount(std::size_t edgeAmount);
     void setTries(int tries) { m_tries = tries; }
+
     Graph generate();
+
 private:
-    bool isConnected(const Graph& graph);
+    bool isConnected(const Graph &graph);
+    void saveToFile(const Graph &graph);
+
+    std::string m_file;
     std::size_t m_vertexAmount;
-    long int m_edgeAmount;
+    std::size_t m_edgeAmount;
     int m_tries;
 };
 

@@ -1,6 +1,9 @@
 #include "GraphGenerator.h"
-#include "Log.h"
+#include <GraphSerialization.h>
+#include <Log.h>
 #include <random>
+#include <fstream>
+#include <stdexcept>
 
 namespace GIS {
 
@@ -13,7 +16,6 @@ static void DFS(std::vector<bool> &discovered, const Graph::NbhList &list, Graph
         }
     }
 }
-
 
 static Graph::Edge generateRandomEdge(std::size_t maxVertex) {
     //TODO : settable from outside
@@ -32,7 +34,7 @@ static Graph::Edge generateRandomEdge(std::size_t maxVertex) {
     return Graph::Edge(from, to ,value);
 }
 
-static std::set<Graph::Edge> generateEdgeSet(long int edgeAmount, std::size_t maxVertex) {
+static std::set<Graph::Edge> generateEdgeSet(std::size_t edgeAmount, std::size_t maxVertex) {
     std::set<Graph::Edge> edgeSet;
     do {
         Graph::Edge edge = generateRandomEdge(maxVertex);
@@ -64,31 +66,33 @@ Graph GraphGenerator::generate() {
         throw InvalidParameterException("Not enough edges set");
 
     std::set<Graph::Edge> edgeSet;
+    Graph graph;
     auto tries = m_tries;
 
     do {
         LOG("Try " << m_tries - tries + 1 << "/" << m_tries)
         edgeSet = generateEdgeSet(m_edgeAmount, m_vertexAmount);
         LOG("Got " << edgeSet.size() << " double edges");
+        graph = Graph(m_vertexAmount, edgeSet);
         tries--;
-    } while (!isConnected(Graph(m_vertexAmount, edgeSet)) && tries);
+    } while (!isConnected(graph) && tries);
 
     if (tries == 0) {
         throw GraphNotConnectedException();
     }
+    saveToFile(graph);
     return Graph(m_vertexAmount, edgeSet);
 }
 
 bool GraphGenerator::isConnected(const Graph& graph) {
     //Hello DFS!
-    LOG("isConnected");
     auto list = graph.getNeighbourhoodList();
     LOG("Got graph with " << graph.getVertexAmount() << " vertexes and "
             << graph.getEdgeAmount() << " edges");
     std::vector<bool> discovered(list.size(), false);
     DFS(discovered, list, Graph::Vertex(0));
-    int discoveredAmount = 0;
-    for(int i = 0; i < discovered.size(); i++) {
+    std::size_t discoveredAmount = 0;
+    for(std::size_t i = 0; i < discovered.size(); i++) {
         if (discovered[i])
             discoveredAmount++;
     }
@@ -98,6 +102,18 @@ bool GraphGenerator::isConnected(const Graph& graph) {
     }
     LOG("Graph not connected");
     return false;
+}
+
+void GraphGenerator::saveToFile(const Graph &graph) {
+    std::ofstream file(m_file);
+    if (!file) {
+        LOG("Couldn't open file " << m_file);
+        return;
+    }
+    file << graph << std::endl;
+    if (file.fail()) {
+        LOG("Error writing to file " << m_file);
+    }
 }
 
 } /* namespace GIS */
