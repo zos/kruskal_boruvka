@@ -1,5 +1,5 @@
 #include "GraphSerialization.h"
-#include <Log.h>
+#include <log/Log.h>
 
 #include <stdexcept>
 
@@ -47,7 +47,7 @@ std::istream &operator >>(std::istream &is, GIS::Graph &graph) {
     } catch (std::istream::failure &e) {
         LOG("Deserialization failed with: " << e.what());
     }
-    graph = GIS::Graph(vertexAmount, edges);
+    graph = GIS::Graph(vertexAmount, std::move(edges));
     is.exceptions(std::istream::goodbit);
     return is;
 }

@@ -1,0 +1,15 @@
+SET(COMMON_PATH ${PROJECT_SOURCE_DIR}/common)
+SET(GENERATOR_PATH ${PROJECT_SOURCE_DIR}/tools/generator)
+
+SET(GENERATOR_SOURCES
+    ${COMMON_PATH}/graph/Graph.cpp
+    ${COMMON_PATH}/serializer/GraphSerialization.cpp
+    ${GENERATOR_PATH}/GraphGenerator.cpp
+    ${GENERATOR_PATH}/generator.cpp)
+
+INCLUDE_DIRECTORIES(
+    ${GENERATOR_PATH}
+    ${COMMON_PATH}
+    )
+
+ADD_EXECUTABLE(${TARGET_GENERATOR} ${GENERATOR_SOURCES})

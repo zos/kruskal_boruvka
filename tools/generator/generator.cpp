@@ -1,6 +1,6 @@
-#include <Log.h>
-#include <Graph.h>
-#include <GraphGenerator.h>
+#include <log/Log.h>
+#include <graph/Graph.h>
+#include "GraphGenerator.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>

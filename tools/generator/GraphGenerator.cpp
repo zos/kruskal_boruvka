@@ -1,6 +1,6 @@
 #include "GraphGenerator.h"
-#include <GraphSerialization.h>
-#include <Log.h>
+#include <serializer/GraphSerialization.h>
+#include <log/Log.h>
 #include <random>
 #include <fstream>
 #include <stdexcept>
@@ -73,7 +73,7 @@ Graph GraphGenerator::generate() {
         LOG("Try " << m_tries - tries + 1 << "/" << m_tries)
         edgeSet = generateEdgeSet(m_edgeAmount, m_vertexAmount);
         LOG("Got " << edgeSet.size() << " double edges");
-        graph = Graph(m_vertexAmount, edgeSet);
+        graph = Graph(m_vertexAmount, std::move(edgeSet));
         tries--;
     } while (!isConnected(graph) && tries);
 
@@ -81,7 +81,7 @@ Graph GraphGenerator::generate() {
         throw GraphNotConnectedException();
     }
     saveToFile(graph);
-    return Graph(m_vertexAmount, edgeSet);
+    return graph;
 }
 
 bool GraphGenerator::isConnected(const Graph& graph) {

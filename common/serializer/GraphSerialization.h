@@ -1,6 +1,6 @@
 #pragma once
 #include <fstream>
-#include <Graph.h>
+#include <graph/Graph.h>
 
 //TODO : Describe the format of serialization
 
