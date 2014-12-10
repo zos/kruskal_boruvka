@@ -1,24 +1,12 @@
 #include <log/Log.h>
 #include <graph/Graph.h>
+#include <serializer/GraphPrinter.h>
 #include "GraphGenerator.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
 
 using namespace GIS;
-
-void printGraph(const Graph &graph) {
-    auto list = graph.getNeighbourhoodList();
-    auto vertexes = graph.getVertexAmount();
-
-    for (std::size_t i = 0; i < vertexes; i++) {
-        std::cout << i << " : ";
-        for (auto &edge : list[i]) {
-            std::cout << edge.end() << ", ";
-        }
-        std::cout << std::endl;
-    }
-}
 
 int main(int argc, char** argv) {
     std::size_t defaultVertexes = 100;

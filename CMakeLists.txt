@@ -20,6 +20,8 @@ ENDIF()
 ADD_DEFINITIONS("-Werror -Wall -Wextra")
 
 SET(TARGET_GENERATOR "graph-generator")
-ADD_SUBDIRECTORY(tools)
+SET(TARGET_KRUSKAL "kruskal-test")
 
+ADD_SUBDIRECTORY(tools)
+ADD_SUBDIRECTORY(cpp/tests)
 

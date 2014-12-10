@@ -21,11 +21,38 @@ public:
             other.m_end = 0;
             other.m_value = 0;
         }
+        Edge& operator=(const Edge &other) {
+            if (this == &other)
+                return *this;
+            m_begin = other.m_begin;
+            m_end = other.m_end;
+            m_value = other.m_value;
+
+            return *this;
+        }
+        Edge& operator=(Edge &&other) {
+            if (this == &other)
+                return *this;
+            m_begin = other.m_begin;
+            m_end = other.m_end;
+            m_value = other.m_value;
+
+            other.m_begin = 0;
+            other.m_end = 0;
+            other.m_value = 0;
+
+            return *this;
+        }
+
         // Do not compare values of edges, as we don't want multiple edges between the same
         // pair of vertexes
-        bool operator<(const GIS::Graph::Edge &other) const {
-            return begin() < other.begin()
-                    || (begin() == other.begin() && end() < other.end());
+        bool operator<(const Edge &other) const {
+            auto normalizedThis = normalize(*this);
+            auto normalizedOther = normalize(other);
+
+            return normalizedThis.begin() < normalizedOther.begin()
+                    || (normalizedThis.begin() == normalizedOther.begin()
+                            && normalizedThis.end() < normalizedOther.end());
         }
 
         Vertex begin() const {
@@ -37,10 +64,20 @@ public:
         Vertex value() const {
             return m_value;
         }
+
+        static Edge normalize(const Edge &edge) {
+            if (edge.begin() < edge.end())
+                return edge;
+            else
+                return Edge(edge.end(), edge.begin(), edge.value());
+        }
+
     private:
         Vertex m_begin;
         Vertex m_end;
         Value m_value;
+
+
     };
     typedef std::set<Edge> EdgeSet;
     typedef std::vector<std::list<Edge>> NbhList;
@@ -48,6 +85,30 @@ public:
 
     Graph() : m_edgeAmount(0), m_vertexAmount(0) {}
     Graph(std::size_t vertexAmount, std::set<Edge> &&edgeSet);
+
+    Graph(Graph &&other) {
+        m_edgeSet = std::move(other.m_edgeSet);
+        m_edgeAmount = other.m_edgeAmount;
+        m_vertexAmount = other.m_vertexAmount;
+
+        other.m_edgeAmount = 0;
+        other.m_vertexAmount = 0;
+    }
+
+    Graph& operator=(Graph &&other) {
+        if (this == &other)
+            return *this;
+
+        m_edgeSet = std::move(other.m_edgeSet);
+        m_edgeAmount = other.m_edgeAmount;
+        m_vertexAmount = other.m_vertexAmount;
+
+        other.m_edgeAmount = 0;
+        other.m_vertexAmount = 0;
+
+        return *this;
+    }
+
     std::size_t getVertexAmount() const;
     long int getEdgeAmount() const;
     EdgeSet getEdgeSet() const;

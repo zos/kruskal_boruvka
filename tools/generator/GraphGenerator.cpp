@@ -38,10 +38,8 @@ static std::set<Graph::Edge> generateEdgeSet(std::size_t edgeAmount, std::size_t
     std::set<Graph::Edge> edgeSet;
     do {
         Graph::Edge edge = generateRandomEdge(maxVertex);
-        Graph::Edge edgeReverse(edge.end(), edge.begin(), edge.value());
         edgeSet.insert(edge);
-        edgeSet.insert(edgeReverse);
-    } while (edgeSet.size() < 2 * edgeAmount);
+    } while (edgeSet.size() < edgeAmount);
     return edgeSet;
 }
 
@@ -72,7 +70,7 @@ Graph GraphGenerator::generate() {
     do {
         LOG("Try " << m_tries - tries + 1 << "/" << m_tries)
         edgeSet = generateEdgeSet(m_edgeAmount, m_vertexAmount);
-        LOG("Got " << edgeSet.size() << " double edges");
+        LOG("Got " << edgeSet.size() << " edges");
         graph = Graph(m_vertexAmount, std::move(edgeSet));
         tries--;
     } while (!isConnected(graph) && tries);

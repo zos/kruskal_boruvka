@@ -5,7 +5,7 @@ namespace GIS {
 
 Graph::Graph(std::size_t vertexAmount, std::set<Edge> &&edgeSet) {
 
-    m_edgeAmount = edgeSet.size() / 2;
+    m_edgeAmount = edgeSet.size();
     m_vertexAmount = vertexAmount;
     m_edgeSet = std::move(edgeSet);
 }
@@ -27,6 +27,7 @@ Graph::NbhList Graph::getNeighbourhoodList() const {
     list.resize(m_vertexAmount);
     for (const Graph::Edge &edge : m_edgeSet) {
         list[edge.begin()].push_back(edge);
+        list[edge.end()].push_back(Edge(edge.end(), edge.begin(), edge.value()));
     }
     return list;
 
@@ -41,6 +42,7 @@ Graph::NbhMap Graph::getNeighbourhoodMap() const {
 
     for (auto &edge : m_edgeSet) {
         map[edge.begin()][edge.begin()] = edge.value();
+        map[edge.end()][edge.begin()] = edge.value();
     }
     return map;
 }
