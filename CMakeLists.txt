@@ -22,6 +22,7 @@ ADD_DEFINITIONS("-Werror -Wall -Wextra")
 SET(TARGET_GENERATOR "graph-generator")
 SET(TARGET_KRUSKAL "kruskal-test")
 SET(TARGET_LIST "list-test")
+SET(TARGET_VECTOR "vector-test")
 
 ADD_SUBDIRECTORY(tools)
 ADD_SUBDIRECTORY(cpp/tests)

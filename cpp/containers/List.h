@@ -142,7 +142,7 @@ public:
         m_ptr = m_ptr->m_next;
         return it;
     }
-    ListIterator operator++(int junk) {
+    ListIterator& operator++(int junk) {
         (void) junk;
         m_ptr = m_ptr->m_next;
         return *this;
