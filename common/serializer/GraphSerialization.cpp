@@ -45,11 +45,16 @@ std::istream &operator >>(std::istream &is, GIS::Graph &graph) {
                 LOG("Got edge : (" << i << ", " << end << ", " << value << ")");
             }
         }
+        LOG("Got " << edges.size() << " edges");
+        graph = GIS::Graph(vertexAmount, std::move(edges));
     } catch (std::ios_base::failure &e) {
         LOG("Deserialization failed with: " << e.what());
+    } catch (std::exception &e) {
+        LOG("Deserialization failed with: " << e.what());
+    } catch (...) {
+        LOG("This should not have happened...");
     }
-    LOG("Got " << edges.size() << " edges");
-    graph = GIS::Graph(vertexAmount, std::move(edges));
+
     is.exceptions(std::istream::goodbit);
     return is;
 }

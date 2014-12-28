@@ -1,5 +1,7 @@
 #include "Kruskal.h"
 #include <log/Log.h>
+#include <containers/Vector.h>
+
 #include <algorithm>
 
 namespace GIS {
@@ -8,7 +10,7 @@ namespace Algorithms {
 
 namespace Kruskal {
 
-Graph::Vertex findRoot(std::vector<long int> &integrals, const Graph::Vertex &vertex) {
+Graph::Vertex findRoot(Vector<long int> &integrals, const Graph::Vertex &vertex) {
     if (integrals[vertex] == -1)
         return vertex;
     auto rootVertex = findRoot(integrals, integrals[vertex]);
@@ -16,7 +18,7 @@ Graph::Vertex findRoot(std::vector<long int> &integrals, const Graph::Vertex &ve
     return rootVertex;
 }
 
-bool findUnion(std::vector<long int> &integrals, const Graph::Edge &edge) {
+bool findUnion(Vector<long int> &integrals, const Graph::Edge &edge) {
     auto root1 = findRoot(integrals, edge.begin());
     auto root2 = findRoot(integrals, edge.end());
 
@@ -28,13 +30,13 @@ bool findUnion(std::vector<long int> &integrals, const Graph::Edge &edge) {
 }
 
 Graph getMST(const Graph &graph) {
-    std::vector<long int> integrals;
+    Vector<long int> integrals;
     Graph::EdgeSet mst;
     auto edgeSet = graph.getEdgeSet();
     integrals.resize(graph.getVertexAmount(), -1);
     std::cout << "Kruskal" << std::endl;
 
-    std::vector<Graph::Edge> edgesSorted;
+    Vector<Graph::Edge> edgesSorted;
     edgesSorted.reserve(edgeSet.size());
     for(auto &edge : edgeSet) {
         edgesSorted.push_back(Graph::Edge::normalize(edge));

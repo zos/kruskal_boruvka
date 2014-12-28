@@ -1,9 +1,10 @@
 #include <kruskal/Kruskal.h>
 #include <serializer/GraphPrinter.h>
 #include <serializer/GraphSerialization.h>
-#include <fstream>
 #include <log/Log.h>
 
+#include <assert.h>
+#include <fstream>
 using namespace GIS;
 
 const std::string file = "graph10v_20e.txt";
@@ -16,6 +17,7 @@ const std::string file = "graph10v_20e.txt";
 int main() {
     Graph graph;
     std::ifstream fin(file);
+    assert(fin && "Test needs a file!");
     fin >> graph;
     printGraph(graph);
 

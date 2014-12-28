@@ -251,26 +251,60 @@ private:
 template<typename T>
 class VectorIterator {
 public:
+    typedef VectorIterator self_type;
+    typedef T value_type;
+    typedef T& reference;
+    typedef T* pointer;
+    typedef std::forward_iterator_tag iterator_category;
+    typedef long int difference_type;
     VectorIterator() : m_ptr(nullptr) {}
-    T& operator*() const {
+    reference operator*() const {
         return *m_ptr;
     }
-    T* operator->() const {
+    pointer operator->() const {
         return m_ptr;
     }
-    VectorIterator& operator++(){
+    self_type& operator++() {
+        m_ptr++;
+        return *this;
+    }
+    self_type operator++(int) {
         VectorIterator tmp = *this;
         m_ptr++;
         return tmp;
     }
-    VectorIterator& operator++(int){
-        m_ptr++;
+
+    self_type& operator--() {
+        m_ptr--;
         return *this;
     }
-    bool operator==(const VectorIterator &other) const {
+
+    self_type operator--(int) {
+        VectorIterator tmp = *this;
+        m_ptr--;
+        return tmp;
+    }
+
+    self_type operator+(int off) {
+        return VectorIterator(m_ptr + off);
+    }
+
+    self_type operator-(int off) {
+        return VectorIterator(m_ptr - off);
+    }
+
+    difference_type operator-(const self_type& other) {
+        return m_ptr - other.m_ptr;
+    }
+
+    bool operator<(const self_type &other) const {
+        return m_ptr < other.m_ptr;
+    }
+
+    bool operator==(const self_type &other) const {
         return other.m_ptr == m_ptr;
     }
-    bool operator!=(const VectorIterator &other) const {
+    bool operator!=(const self_type &other) const {
         return other.m_ptr != m_ptr;
     }
 
