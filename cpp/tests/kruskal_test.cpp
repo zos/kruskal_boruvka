@@ -27,6 +27,8 @@ int main() {
         LOG("Wrong amount of edges!");
         return -1;
     }
+
+    LOG("SUCCESS!");
     return 0;
 }
 

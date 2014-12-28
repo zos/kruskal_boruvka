@@ -1,4 +1,6 @@
 #include <containers/List.h>
+#include <log/Log.h>
+
 #include <assert.h>
 
 
@@ -26,5 +28,7 @@ int main() {
         l.pop_back();
 
     assert(l.size() == 0);
+
+    LOG("SUCCESS!");
     return 0;
 }
