@@ -255,7 +255,7 @@ public:
     typedef T value_type;
     typedef T& reference;
     typedef T* pointer;
-    typedef std::forward_iterator_tag iterator_category;
+    typedef std::bidirectional_iterator_tag iterator_category;
     typedef long int difference_type;
     VectorIterator() : m_ptr(nullptr) {}
     reference operator*() const {

@@ -21,7 +21,10 @@ int main() {
     fin >> graph;
     printGraph(graph);
 
-    auto mst = Algorithms::Kruskal::getMST(graph);
+    Algorithms::Kruskal kruskal;
+    kruskal.setGraph(graph);
+    kruskal.prepareMST();
+    auto mst = kruskal.getMST();
 
     printGraph(mst);
 
