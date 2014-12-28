@@ -134,11 +134,28 @@ public:
     }
 
     void erase(iterator it) {
+        erase(it.m_ptr, it.m_ptr + 1);
     }
 
     void erase(iterator from, iterator to) {
-
+        erase(from.m_ptr, to.m_ptr);
     }
+
+    T& front() noexcept {
+        return m_values[0];
+    }
+
+    const T& front() const noexcept {
+        return m_values[0];
+    }
+
+    T& back() noexcept {
+        return m_values[m_size - 1];
+    }
+
+    const T& back() const noexcept {
+        return m_values[m_size - 1];
+	}
 
     T& operator[](size_type n) noexcept {
         return m_values[n];
@@ -182,6 +199,17 @@ public:
     }
 
 private:
+    void erase(T* from, T* to) {
+        unsigned to_erase = to- from;
+        auto ptr = from;
+        for (; ptr < m_values + m_size - to_erase; ptr++) {
+            *ptr = std::move(*(ptr + 1));
+        }
+        for (; ptr < m_values + m_size; ptr++) {
+            ptr->~T();
+        }
+        m_size -= to_erase;
+    }
 
     void copy(T* to, const T* from, size_type toCopy) {
         for (size_type i = 0; i < toCopy; i++) {
