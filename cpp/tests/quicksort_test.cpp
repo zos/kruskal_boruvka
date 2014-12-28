@@ -1,6 +1,7 @@
 #include <log/Log.h>
 #include <sort/QuickSort.h>
 
+#include <algorithm>
 #include <assert.h>
 #include <vector>
 
@@ -16,19 +17,14 @@ int main() {
     for ( unsigned i = 0; i < 1000000; i++)
         vbig.push_back(i);
 
-    GIS::QuickSort::sort(vbig.begin(), vbig.end());
-    for (unsigned i = 0; i < vbig.size(); i++)
-        assert(vbig[i] == (int)i);
-
-    std::vector<int> vbigrev;
-
-    for ( unsigned i = 0; i < 1000000; i++)
-        vbigrev.push_back(1000000 - i);
-
-    GIS::QuickSort::sort(vbigrev.begin(), vbigrev.end());
-    for (unsigned i = 0; i < vbigrev.size(); i++)
-        assert(vbigrev[i] == (int)(i+1));
+    for (int i = 0; i < 100; i++) {
+        GIS::QuickSort::sort(vbig.begin(), vbig.end());
+        for (unsigned i = 0; i < vbig.size(); i++)
+            assert(vbig[i] == (int)i);
+        std::next_permutation(vbig.begin(), vbig.end());
+    }
     LOG("SUCCESS!");
+    return 0;
 }
 
 
