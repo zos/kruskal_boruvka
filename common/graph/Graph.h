@@ -1,5 +1,8 @@
 #pragma once
 
+#include <containers/Vector.h>
+#include <containers/List.h>
+
 #include <vector>
 #include <list>
 #include <set>
@@ -80,8 +83,8 @@ public:
 
     };
     typedef std::set<Edge> EdgeSet;
-    typedef std::vector<std::list<Edge>> NbhList;
-    typedef std::vector<std::vector<Value> > NbhMap;
+    typedef Vector<List<Edge>> NbhList;
+    typedef Vector<Vector<Value> > NbhMap;
 
     Graph() : m_edgeAmount(0), m_vertexAmount(0) {}
     Graph(std::size_t vertexAmount, std::set<Edge> &&edgeSet);

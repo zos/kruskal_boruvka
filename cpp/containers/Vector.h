@@ -19,7 +19,7 @@ class Vector {
 public:
     typedef VectorIterator<T> iterator;
     typedef VectorConstIterator<T> const_iterator;
-    typedef long int size_type;
+    typedef std::size_t size_type;
 
     Vector() : m_size(0) {
         m_capacity = 8;
@@ -80,6 +80,14 @@ public:
     }
     iterator end() {
         return iterator(m_values + m_size);
+    }
+
+    const_iterator begin() const {
+        return const_iterator(m_values);
+    }
+
+    const_iterator end() const {
+        return const_iterator(m_values + m_size);
     }
 
     void resize(size_type size) {
@@ -255,7 +263,7 @@ public:
     typedef T value_type;
     typedef T& reference;
     typedef T* pointer;
-    typedef std::bidirectional_iterator_tag iterator_category;
+    typedef std::random_access_iterator_tag iterator_category;
     typedef long int difference_type;
     VectorIterator() : m_ptr(nullptr) {}
     reference operator*() const {
@@ -285,16 +293,21 @@ public:
         return tmp;
     }
 
-    self_type operator+(int off) {
+    self_type operator+(difference_type off) {
         return VectorIterator(m_ptr + off);
     }
 
-    self_type operator-(int off) {
+    self_type operator-(difference_type off) {
         return VectorIterator(m_ptr - off);
     }
 
     difference_type operator-(const self_type& other) {
         return m_ptr - other.m_ptr;
+    }
+
+    self_type& operator+=(difference_type off) {
+        m_ptr += off;
+        return *this;
     }
 
     bool operator<(const self_type &other) const {
@@ -314,36 +327,75 @@ private:
     friend class Vector<T>;
 };
 
-/*template<typename T>
+template<typename T>
 class VectorConstIterator {
 public:
-    const T& operator*() const {
+    typedef VectorConstIterator self_type;
+    typedef T value_type;
+    typedef const T& reference;
+    typedef const T* pointer;
+    typedef std::random_access_iterator_tag iterator_category;
+    typedef long int difference_type;
+    VectorConstIterator() : m_ptr(nullptr) {}
+    reference operator*() const {
         return *m_ptr;
     }
-    const T* operator->() const {
+    pointer operator->() const {
         return m_ptr;
     }
-    VectorConstIterator& operator++(){
+    self_type& operator++() {
+        m_ptr++;
+        return *this;
+    }
+    self_type operator++(int) {
         VectorConstIterator tmp = *this;
         m_ptr++;
         return tmp;
     }
-    VectorConstIterator& operator++(int){
-        m_ptr++;
+
+    self_type& operator--() {
+        m_ptr--;
         return *this;
     }
-    bool operator==(const VectorConstIterator &other) const {
+
+    self_type operator--(int) {
+        VectorConstIterator tmp = *this;
+        m_ptr--;
+        return tmp;
+    }
+
+    self_type operator+(difference_type off) {
+        return VectorConstIterator(m_ptr + off);
+    }
+
+    self_type operator-(difference_type off) {
+        return VectorConstIterator(m_ptr - off);
+    }
+
+    difference_type operator-(const self_type& other) {
+        return m_ptr - other.m_ptr;
+    }
+
+    self_type& operator+=(difference_type off) {
+        m_ptr += off;
+        return *this;
+    }
+
+    bool operator<(const self_type &other) const {
+        return m_ptr < other.m_ptr;
+    }
+
+    bool operator==(const self_type &other) const {
         return other.m_ptr == m_ptr;
     }
-    bool operator!=(const VectorConstIterator &other) const {
+    bool operator!=(const self_type &other) const {
         return other.m_ptr != m_ptr;
     }
+
 private:
-    VectorConstIterator(T *ptr) : m_ptr(ptr) {}
-
-    T *m_ptr;
+    VectorConstIterator(const T *ptr) : m_ptr(ptr) {}
+    const T *m_ptr;
     friend class Vector<T>;
-
 };
-*/
+
 }
