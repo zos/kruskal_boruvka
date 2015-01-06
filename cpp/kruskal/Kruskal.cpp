@@ -29,6 +29,7 @@ bool Kruskal::findUnion(const Graph::Edge &edge) {
 }
 
 void Kruskal::prepareMST() {
+    LOGI("Kruskal: prepareMST");
     m_mstEdges.clear();
     m_mstEdges.reserve(m_vertexAmount - 1);
 
@@ -37,16 +38,12 @@ void Kruskal::prepareMST() {
                 return left.value() < right.value();});
 
     for(auto &edge : m_edges) {
-        std::cout << "Integrals: ";
-        for(unsigned int i = 0; i < m_integrals.size(); i++)
-            std::cout << m_integrals[i] << ",";
-        std::cout << std::endl;
         LOG("Kruskal: Checking edge (" << edge.begin() << "," << edge.end() << "," << edge.value() << ")")
         if (findUnion(edge)) {
             LOG("Kruskal: Adding (" << edge.begin() << ", " << edge.end() << ", " << edge.value() << ")");
             m_mstEdges.push_back(edge);
             if (m_mstEdges.size() == static_cast<long unsigned>(m_vertexAmount - 1)) {
-                LOG("Kruskal: MST found, no further search needed");
+                LOGI("Kruskal: MST found, no further search needed");
                 break;
             }
         }
@@ -55,6 +52,7 @@ void Kruskal::prepareMST() {
 }
 
 Graph Kruskal::getMST() {
+    LOGI("Kruskal: getMST");
     Graph::EdgeSet mstSet;
     for (unsigned i = 0; i < m_mstEdges.size(); ++i)
         mstSet.insert(m_mstEdges[i]);

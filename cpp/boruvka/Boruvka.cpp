@@ -30,7 +30,6 @@ static EdgeVector merge(const EdgeVector &left, const EdgeVector &right) {
     for(; rightIt != right.end(); ++rightIt) {
         merged.push_back(*rightIt);
     }
-    LOG("Merged: " << left.size() << " + " << right.size() << " = " << merged.size());
     return merged;
 }
 
@@ -60,7 +59,7 @@ void Boruvka::findUnion(Graph::Vertex beginRoot, Graph::Vertex endRoot, const Gr
 }
 
 void Boruvka::setGraph(const Graph &graph) {
-    LOG("Boruvka: setGraph");
+    LOGI("Boruvka: setGraph");
     m_components.clear();
     m_componentInfos.clear();
     m_componentInfos.reserve(graph.getVertexAmount());
@@ -79,7 +78,7 @@ void Boruvka::setGraph(const Graph &graph) {
     }
 }
 void Boruvka::prepareMST() {
-    LOG("Boruvka: prepareMST");
+    LOGI("Boruvka: prepareMST");
     //Init data
     for (auto &component : m_componentInfos) {
         GIS::QuickSort::sort(component.edges.begin(), component.edges.end(),
@@ -95,6 +94,7 @@ void Boruvka::prepareMST() {
         Graph::Vertex endRoot;
         Graph::Edge minEdge(0, 0, std::numeric_limits<Graph::Value>::max());
         for (auto &component : m_components) {
+            //this is NOT optimal
             for (auto &edge : m_componentInfos[component].edges) {
                 LOG("Boruvka: Checking edge (" << edge.begin() << ", " << edge.end() << ", "
                         << edge.value() << ") for component: " << component);
@@ -107,14 +107,9 @@ void Boruvka::prepareMST() {
                 }
             }
         }
-        std::cout << "Boruvka: ComponentInfos (";
-        for (unsigned i = 0; i < m_componentInfos.size(); ++i) {
-            std::cout << "[i: " << i << ", root: " << m_componentInfos[i].root << " , edges: " <<
-                      m_componentInfos[i].edges.size() << " ], ";
-        }
-        std::cout << ")" << std::endl;
+
         if (minEdge.value() == std::numeric_limits<Graph::Value>::max()) {
-            LOG("Minimum edge not set! Graph is not connected");
+            LOGE("Minimum edge not set! Graph is not connected");
             throw std::runtime_error("Graph not connected!");
         }
 
@@ -123,9 +118,11 @@ void Boruvka::prepareMST() {
         LOG("Boruvka: Joining " << componentRoot << " and " << endRoot);
         m_mstEdges.push_back(minEdge);
     }
+    LOGI("Boruvka: MST found");
 
 }
 Graph Boruvka::getMST() {
+    LOGI("Boruvka: getMST");
     Graph::EdgeSet mstSet;
     for (unsigned i = 0; i < m_mstEdges.size(); ++i)
         mstSet.insert(m_mstEdges[i]);

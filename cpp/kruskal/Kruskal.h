@@ -8,6 +8,7 @@ namespace Algorithms {
 class Kruskal {
 public:
     void setGraph(const Graph &graph) {
+        LOGI("Kruskal: setGraph");
         auto edgeSet = graph.getEdgeSet();
         m_integrals.clear();
         m_vertexAmount = graph.getVertexAmount();
