@@ -11,7 +11,7 @@ int main() {
 
     for (int i = 0; i < 10; i++)
         v.push_back(i);
-
+    LOG(v.size());
     assert(v.size() == 10);
     assert(v.capacity() == 16);
     assert(v.front() == 0);

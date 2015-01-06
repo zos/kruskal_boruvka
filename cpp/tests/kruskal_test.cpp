@@ -9,14 +9,20 @@ using namespace GIS;
 
 const std::string file = "graph10v_20e.txt";
 
-// Should be parametrized:
+// Should be parameterized:
 // -f file path
 // -o output path
 // -r resolution
 
-int main() {
+int main(int argc, char **argv) {
     Graph graph;
-    std::ifstream fin(file);
+    std::string filename;
+    if (argc == 2) {
+        filename = argv[1];
+    } else {
+        filename = file;
+    }
+    std::ifstream fin(filename);
     assert(fin && "Test needs a file!");
     fin >> graph;
     printGraph(graph);

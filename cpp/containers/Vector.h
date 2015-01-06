@@ -41,7 +41,7 @@ public:
     }
 
     Vector(const Vector &v) {
-        m_values = static_cast<T*>(::operator new (sizeof(T(v.m_capacity))));
+        m_values = static_cast<T*>(::operator new (sizeof(T[v.m_capacity])));
         copy(m_values, v.m_values, v.size());
         m_size = v.size();
         m_capacity = v.capacity();
@@ -52,28 +52,36 @@ public:
         m_capacity = v.m_capacity;
 
         v.m_capacity = 8;
-        v.m_values = static_cast<T*>(::operator new (sizeof(T(m_capacity))));
+        v.m_values = static_cast<T*>(::operator new (sizeof(T[m_capacity])));
 
     }
 
     ~Vector() {
         clear();
+        ::operator delete(m_values);
+        m_values = nullptr;
     }
 
     Vector& operator=(const Vector &v) {
         if (this == &v)
             return *this;
+        clear();
+        ::operator delete(m_values);
+        m_values = static_cast<T*>(::operator new (sizeof(T[m_capacity])));
+
         reserve(v.size());
         copy(m_values, v.m_values, v.size());
+        LOG("Vector: " << m_size);
         return *this;
     }
-    Vector& operator=(Vector &&v) {
+    /*Vector& operator=(Vector &&v) {
         if (this == &v)
             return *this;
+
         reserve(v.size());
         move(m_values, v.m_values, v.size());
         return *this;
-    }
+    }*/
 
     iterator begin() {
         return iterator(m_values);
@@ -121,9 +129,12 @@ public:
             return;
         T *newContainer = static_cast<T*> (::operator new(sizeof(T[capacity])));
         move(newContainer, m_values, m_size);
+        auto keepSize = m_size;
         clear();
+        ::operator delete(m_values);
         m_values = newContainer;
         m_capacity = capacity;
+        m_size = keepSize;
     }
 
     void push_back(const T &value) {
@@ -202,8 +213,8 @@ public:
         for (size_type i = 0; i < m_size; i++) {
             m_values[i].~T();
         }
-        ::operator delete(m_values);
-        m_values = nullptr;
+
+        m_size = 0;
     }
 
 private:
@@ -222,6 +233,7 @@ private:
     void copy(T* to, const T* from, size_type toCopy) {
         for (size_type i = 0; i < toCopy; i++) {
             new(to + i) T(from[i]);
+            m_size++;
         }
     }
 
@@ -240,6 +252,8 @@ private:
         for (size_type i = toMove; i < size; i++)
             new (newValues + i) T(args...);
         clear();
+        ::operator delete(m_values);
+
         m_values = newValues;
         m_capacity = size;
         m_size = toMove;

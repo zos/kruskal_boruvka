@@ -58,6 +58,20 @@ public:
                             && normalizedThis.end() < normalizedOther.end());
         }
 
+        bool operator==(const Edge &edge) {
+            if (begin() != edge.begin())
+                return false;
+            if (end() != edge.end())
+                return false;
+            if (value() != edge.value())
+                return false;
+            return true;
+        }
+
+        bool operator!=(const Edge &edge) {
+            return !(*this == edge);
+        }
+
         Vertex begin() const {
             return m_begin;
         }
@@ -110,6 +124,37 @@ public:
         other.m_vertexAmount = 0;
 
         return *this;
+    }
+
+    bool operator==(const Graph &other) {
+        if (getVertexAmount() != other.getVertexAmount())
+            return false;
+        if (getEdgeAmount() != other.getEdgeAmount())
+            return false;
+
+        auto myNbhList = getNeighbourhoodList();
+        auto otherNbhList = other.getNeighbourhoodList();
+        for (unsigned i = 0; i < getVertexAmount(); i++) {
+            auto myEdgeList = myNbhList[i];
+            auto otherEdgeList = otherNbhList[i];
+            if (myEdgeList.size() != otherEdgeList.size()) {
+                return false;
+            }
+            auto it1 = myEdgeList.begin();
+            auto it2 = otherEdgeList.begin();
+
+            while (it1 != myEdgeList.end()) {
+                if (*it1 != *it2)
+                    return false;
+                ++it1;
+                ++it2;
+            }
+        }
+        return true;
+    }
+
+    bool operator!=(const Graph &other) {
+        return !(*this == other);
     }
 
     std::size_t getVertexAmount() const;

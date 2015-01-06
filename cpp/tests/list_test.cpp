@@ -24,10 +24,16 @@ int main() {
         j++;
     }
 
+    GIS::List<int> l2 = l;
+    assert(l.size() == l2.size());
+
     for(int i = 0; i < 10; i++)
         l.pop_back();
 
     assert(l.size() == 0);
+
+    l2.erase(l2.begin(), l2.end());
+    assert(l2.size() == 0);
 
     LOG("SUCCESS!");
     return 0;

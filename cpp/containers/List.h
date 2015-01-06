@@ -137,6 +137,15 @@ public:
         return it;
     }
 
+    iterator erase(iterator first, iterator last) {
+        auto it = first;
+        while(it != last) {
+            it = erase(it);
+        }
+
+        return it;
+    }
+
     void pop_back() {
         erase(iterator(m_prev));
     }
@@ -213,14 +222,22 @@ public:
         m_ptr = other.m_ptr;
         return *this;
     }
-    ListIterator operator++() {
+    ListIterator operator++(int) {
         ListIterator it = *this;
         m_ptr = m_ptr->m_next;
         return it;
     }
-    ListIterator& operator++(int junk) {
-        (void) junk;
+    ListIterator& operator++() {
         m_ptr = m_ptr->m_next;
+        return *this;
+    }
+    ListIterator operator--(int) {
+        ListIterator it = *this;
+        m_ptr = m_ptr->m_prev;
+        return it;
+    }
+    ListIterator& operator--() {
+        m_ptr = m_ptr->m_prev;
         return *this;
     }
     T& operator*() { return *(m_ptr->m_value); }
