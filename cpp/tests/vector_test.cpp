@@ -27,7 +27,15 @@ int main() {
     }
     assert(v.front() == 9);
 
-    LOG("SUCCESS!");
+    v.clear();
+    assert(v.size() == 0);
+    assert(v.begin() == v.end());
+    v.resize(10, -1);
+    assert(v.size() == 10);
+    for(unsigned i = 0; i < v.size(); i++) {
+        assert(v[i] == -1);
+    }
+    LOGI("SUCCESS!");
     return 0;
 }
 

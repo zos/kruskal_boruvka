@@ -13,6 +13,7 @@ public:
         m_integrals.clear();
         m_vertexAmount = graph.getVertexAmount();
         m_integrals.resize(graph.getVertexAmount(), -1);
+        std::cout << m_integrals.size() << std::endl;
 
         m_edges.clear();
         m_edges.reserve(edgeSet.size());

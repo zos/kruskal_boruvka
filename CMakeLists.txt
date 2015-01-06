@@ -23,10 +23,12 @@ SET(TARGET_GENERATOR "graph-generator")
 SET(TARGET_KRUSKAL "kruskal-test")
 SET(TARGET_BORUVKA "boruvka-test")
 SET(TARGET_MST "mst-test")
+SET(TARGET_KRUSKAL_PROFILER "kruskal-profiler")
 SET(TARGET_LIST "list-test")
 SET(TARGET_VECTOR "vector-test")
 SET(TARGET_QUICKSORT "quicksort-test")
 
 ADD_SUBDIRECTORY(tools)
 ADD_SUBDIRECTORY(cpp/tests)
+ADD_SUBDIRECTORY(cpp/profiler)
 

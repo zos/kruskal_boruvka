@@ -120,7 +120,10 @@ public:
             for (size_type i = size; i < m_size; i++) {
                 m_values[i].~T();
             }
-            m_size = size;
+            for (size_type i = m_size; i < size; i++) {
+                push_back(value);
+            }
+            m_size = std::min(m_size, size);
         }
     }
 
@@ -256,7 +259,7 @@ private:
 
         m_values = newValues;
         m_capacity = size;
-        m_size = toMove;
+        m_size = size;
     }
 
     void range_check(size_type n) const {

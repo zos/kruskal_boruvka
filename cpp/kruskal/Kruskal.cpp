@@ -5,6 +5,8 @@
 
 #include <algorithm>
 
+#include <iostream>
+
 namespace GIS {
 namespace Algorithms {
 
@@ -30,8 +32,12 @@ bool Kruskal::findUnion(const Graph::Edge &edge) {
 
 void Kruskal::prepareMST() {
     LOGI("Kruskal: prepareMST");
+
     m_mstEdges.clear();
     m_mstEdges.reserve(m_vertexAmount - 1);
+
+    m_integrals.clear();
+    m_integrals.resize(m_vertexAmount, -1);
 
     GIS::QuickSort::sort(m_edges.begin(), m_edges.end(),
             [] (const Graph::Edge &left, const Graph::Edge &right) {
@@ -40,14 +46,13 @@ void Kruskal::prepareMST() {
     for(auto &edge : m_edges) {
         LOG("Kruskal: Checking edge (" << edge.begin() << "," << edge.end() << "," << edge.value() << ")")
         if (findUnion(edge)) {
-            LOG("Kruskal: Adding (" << edge.begin() << ", " << edge.end() << ", " << edge.value() << ")");
+            LOGI("Kruskal: Adding (" << edge.begin() << ", " << edge.end() << ", " << edge.value() << ")");
             m_mstEdges.push_back(edge);
             if (m_mstEdges.size() == static_cast<long unsigned>(m_vertexAmount - 1)) {
                 LOGI("Kruskal: MST found, no further search needed");
                 break;
             }
         }
-
     }
 }
 
@@ -61,7 +66,3 @@ Graph Kruskal::getMST() {
 
 } // namespace Algorithms
 } // namespace GIS
-
-
-
-

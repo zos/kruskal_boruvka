@@ -73,7 +73,7 @@ void Boruvka::setGraph(const Graph &graph) {
     }
     for (auto &edgeList : graph.getNeighbourhoodList()) {
         for (auto &edge : edgeList) {
-            m_componentInfos[edge.begin()].edges.push_back(edge);
+            m_componentInfos[edge.begin()].edges.push_back(Graph::Edge::normalize(edge));
         }
     }
 }
