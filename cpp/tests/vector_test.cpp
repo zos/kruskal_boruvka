@@ -35,7 +35,7 @@ int main() {
     for(unsigned i = 0; i < v.size(); i++) {
         assert(v[i] == -1);
     }
-    LOGI("SUCCESS!");
+    LOG("SUCCESS!");
     return 0;
 }
 

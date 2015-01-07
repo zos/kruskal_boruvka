@@ -29,7 +29,7 @@ std::istream &operator >>(std::istream &is, GIS::Graph &graph) {
     is.exceptions(std::istream::failbit | std::istream::badbit | std::istream::eofbit);
     try {
         is >> vertexAmount;
-        LOG("Getting graph of " << vertexAmount << " vertexes.");
+        LOGD("Getting graph of " << vertexAmount << " vertexes.");
 
         GIS::Graph::Vertex begin;
         GIS::Graph::Vertex end;
@@ -42,20 +42,19 @@ std::istream &operator >>(std::istream &is, GIS::Graph &graph) {
                 is >> end;
                 is >> value;
                 edges.insert(GIS::Graph::Edge(begin, end, value));
-                LOG("Got edge : (" << i << ", " << end << ", " << value << ")");
+                LOGD("Got edge : (" << i << ", " << end << ", " << value << ")");
             }
         }
-        LOG("Got " << edges.size() << " edges");
+        LOGD("Got " << edges.size() << " edges");
         graph = GIS::Graph(vertexAmount, std::move(edges));
     } catch (std::ios_base::failure &e) {
-        LOG("Deserialization failed with: " << e.what());
+        LOGE("Deserialization failed with: " << e.what());
     } catch (std::exception &e) {
-        LOG("Deserialization failed with: " << e.what());
+        LOGE("Deserialization failed with: " << e.what());
     } catch (...) {
-        LOG("This should not have happened...");
+        LOGE("This should not have happened...");
     }
 
     is.exceptions(std::istream::goodbit);
     return is;
 }
-

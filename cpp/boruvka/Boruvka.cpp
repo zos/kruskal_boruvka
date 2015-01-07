@@ -42,7 +42,7 @@ Graph::Vertex Boruvka::findRoot(const Graph::Vertex &vertex) {
 }
 
 void Boruvka::findUnion(Graph::Vertex beginRoot, Graph::Vertex endRoot, const Graph::Edge &edge) {
-    LOG("Boruvka: union on " << beginRoot << " and " << endRoot);
+    LOGI("Boruvka: union on " << beginRoot << " and " << endRoot);
     m_componentInfos[endRoot].root = beginRoot;
     m_componentInfos[edge.begin()].root = beginRoot;
     m_componentInfos[edge.end()].root = beginRoot;
@@ -89,14 +89,14 @@ void Boruvka::prepareMST() {
 
     //Algorithm itself
     while (m_components.size() > 1) {
-        LOG("Boruvka: Got " << m_components.size() << " components");
+        LOGD("Boruvka: Got " << m_components.size() << " components");
         Graph::Vertex componentRoot;
         Graph::Vertex endRoot;
         Graph::Edge minEdge(0, 0, std::numeric_limits<Graph::Value>::max());
         for (auto &component : m_components) {
             //this is NOT optimal
             for (auto &edge : m_componentInfos[component].edges) {
-                LOG("Boruvka: Checking edge (" << edge.begin() << ", " << edge.end() << ", "
+                LOGD("Boruvka: Checking edge (" << edge.begin() << ", " << edge.end() << ", "
                         << edge.value() << ") for component: " << component);
                 Graph::Vertex root = findRoot(edge.end());
                 if (component != root && edge.value() < minEdge.value()) {
@@ -114,8 +114,8 @@ void Boruvka::prepareMST() {
         }
 
         findUnion(componentRoot, endRoot, minEdge);
-        LOG("Boruvka: Adding (" << minEdge.begin() << ", " << minEdge.end() << "," << minEdge.value() << ")");
-        LOG("Boruvka: Joining " << componentRoot << " and " << endRoot);
+        LOGI("Boruvka: Adding (" << minEdge.begin() << ", " << minEdge.end() << "," << minEdge.value() << ")");
+        LOGD("Boruvka: Joining " << componentRoot << " and " << endRoot);
         m_mstEdges.push_back(minEdge);
     }
     LOGI("Boruvka: MST found");

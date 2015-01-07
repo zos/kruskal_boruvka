@@ -9,7 +9,7 @@ namespace GIS {
 
 static void DFS(std::vector<bool> &discovered, const Graph::NbhList &list, Graph::Vertex v) {
     discovered[v] = true;
-    LOG("DFS: In vertex" << v);
+    LOGD("DFS: In vertex" << v);
     for (auto &edge : list[v]) {
         if (!discovered[edge.end()]) {
             DFS(discovered, list, edge.end());
@@ -30,7 +30,7 @@ static Graph::Edge generateRandomEdge(std::size_t maxVertex) {
         to = dVertex(re);
     }
     Graph::Value value = dValue(re);
-    LOG("Generated edge(" << from << ", " << to << ", " << value << ")");
+    LOGD("Generated edge(" << from << ", " << to << ", " << value << ")");
     return Graph::Edge(from, to ,value);
 }
 
@@ -68,9 +68,9 @@ Graph GraphGenerator::generate() {
     auto tries = m_tries;
 
     do {
-        LOG("Try " << m_tries - tries + 1 << "/" << m_tries)
+        LOGD("Try " << m_tries - tries + 1 << "/" << m_tries)
         edgeSet = generateEdgeSet(m_edgeAmount, m_vertexAmount);
-        LOG("Got " << edgeSet.size() << " edges");
+        LOGD("Got " << edgeSet.size() << " edges");
         graph = Graph(m_vertexAmount, std::move(edgeSet));
         tries--;
     } while (!isConnected(graph) && tries);
@@ -85,7 +85,7 @@ Graph GraphGenerator::generate() {
 bool GraphGenerator::isConnected(const Graph& graph) {
     //Hello DFS!
     auto list = graph.getNeighbourhoodList();
-    LOG("Got graph with " << graph.getVertexAmount() << " vertexes and "
+    LOGD("Got graph with " << graph.getVertexAmount() << " vertexes and "
             << graph.getEdgeAmount() << " edges");
     std::vector<bool> discovered(list.size(), false);
     DFS(discovered, list, Graph::Vertex(0));
@@ -95,22 +95,22 @@ bool GraphGenerator::isConnected(const Graph& graph) {
             discoveredAmount++;
     }
     if (discoveredAmount == list.size()){
-        LOG("Graph is connected");
+        LOGD("Graph is connected");
         return true;
     }
-    LOG("Graph not connected");
+    LOGD("Graph not connected");
     return false;
 }
 
 void GraphGenerator::saveToFile(const Graph &graph) {
     std::ofstream file(m_file);
     if (!file) {
-        LOG("Couldn't open file " << m_file);
+        LOGE("Couldn't open file " << m_file);
         return;
     }
     file << graph << std::endl;
     if (file.fail()) {
-        LOG("Error writing to file " << m_file);
+        LOGE("Error writing to file " << m_file);
     }
 }
 

@@ -1,16 +1,21 @@
 #include "GraphPrinter.h"
 #include <iostream>
+#include <sstream>
+#include <log/Log.h>
 
-void printGraph(const GIS::Graph &graph) {
+void printGraph(const GIS::Graph &graph, const std::string &msg) {
     auto list = graph.getNeighbourhoodList();
     auto vertexes = graph.getVertexAmount();
+    LOGP(msg);
+    std::stringstream line;
 
     for (std::size_t i = 0; i < vertexes; i++) {
-        std::cout << i << " : ";
+        line << i << " : ";
         for (auto &edge : list[i]) {
-            std::cout << edge.end() << " <" << edge.value() << ">, ";
+            line << edge.end() << " <" << edge.value() << ">, ";
         }
-        std::cout << std::endl;
+        LOGP(line.str());
+        line.str("");
     }
 }
 

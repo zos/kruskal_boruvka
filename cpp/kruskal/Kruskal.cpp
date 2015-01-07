@@ -23,7 +23,7 @@ bool Kruskal::findUnion(const Graph::Edge &edge) {
     auto root2 = findRoot(edge.end());
 
     if (root1 != root2) {
-        LOG("Kruskal: Joining " << root1 << " and " << root2);
+        LOGD("Kruskal: Joining " << root1 << " and " << root2);
         m_integrals[root1] = root2;
         return true;
     }
@@ -44,7 +44,7 @@ void Kruskal::prepareMST() {
                 return left.value() < right.value();});
 
     for(auto &edge : m_edges) {
-        LOG("Kruskal: Checking edge (" << edge.begin() << "," << edge.end() << "," << edge.value() << ")")
+        LOGD("Kruskal: Checking edge (" << edge.begin() << "," << edge.end() << "," << edge.value() << ")")
         if (findUnion(edge)) {
             LOGI("Kruskal: Adding (" << edge.begin() << ", " << edge.end() << ", " << edge.value() << ")");
             m_mstEdges.push_back(edge);

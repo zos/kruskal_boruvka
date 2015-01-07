@@ -29,6 +29,7 @@ int main(int argc, char **argv) {
         return -1;
     }
 
+    printGraph(graph, "Graph:");
     Algorithms::Kruskal kruskal;
     kruskal.setGraph(graph);
     auto start = std::chrono::system_clock::now();
@@ -50,10 +51,10 @@ int main(int argc, char **argv) {
                           /(float)100;
         unit = "ns";
     }
-    LOGI("Duration: " << goodDuration << " " << unit);
+    LOG("Duration: " << goodDuration << " " << unit);
 
     auto mst = kruskal.getMST();
-    printGraph(mst);
+    printGraph(mst, "MST:");
     return 0;
 }
 
