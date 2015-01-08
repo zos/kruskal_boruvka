@@ -60,26 +60,33 @@ void Boruvka::findUnion(Graph::Vertex beginRoot, Graph::Vertex endRoot, const Gr
 
 void Boruvka::setGraph(const Graph &graph) {
     LOGI("Boruvka: setGraph");
-    m_components.clear();
-    m_componentInfos.clear();
-    m_componentInfos.reserve(graph.getVertexAmount());
-    m_mstEdges.clear();
-    m_mstEdges.reserve(graph.getVertexAmount() - 1);
 
-    for(unsigned i = 0; i < graph.getVertexAmount(); ++i) {
-        m_componentInfos.push_back(ComponentInfo{Graph::Vertex(i),
-                                                 Vector<Graph::Edge>()});
-        m_components.push_back(Graph::Vertex(i));
-    }
-    for (auto &edgeList : graph.getNeighbourhoodList()) {
-        for (auto &edge : edgeList) {
-            m_componentInfos[edge.begin()].edges.push_back(Graph::Edge::normalize(edge));
-        }
-    }
+    m_vertexAmount = graph.getVertexAmount();
+    m_graphEdges = graph.getNeighbourhoodList();
 }
 void Boruvka::prepareMST() {
     LOGI("Boruvka: prepareMST");
     //Init data
+    m_mstEdges.clear();
+    m_mstEdges.reserve(m_vertexAmount - 1);
+
+    m_components.clear();
+    m_componentInfos.clear();
+    m_componentInfos.reserve(m_vertexAmount);
+    for(unsigned i = 0; i < m_vertexAmount; ++i) {
+        m_componentInfos.push_back(ComponentInfo{Graph::Vertex(i),
+                                                 Vector<Graph::Edge>()});
+        m_components.push_back(Graph::Vertex(i));
+    }
+
+    //Copy edges, as we will be deleting those, wich will create cycles
+    for (auto &edgeList : m_graphEdges) {
+        for (auto &edge : edgeList) {
+            m_componentInfos[edge.begin()].edges.push_back(Graph::Edge::normalize(edge));
+        }
+    }
+
+    //Sort edges ordering by value
     for (auto &component : m_componentInfos) {
         GIS::QuickSort::sort(component.edges.begin(), component.edges.end(),
                 [](const Graph::Edge& left, const Graph::Edge &right) {
@@ -95,11 +102,19 @@ void Boruvka::prepareMST() {
         Graph::Edge minEdge(0, 0, std::numeric_limits<Graph::Value>::max());
         for (auto &component : m_components) {
             //this is NOT optimal
-            for (auto &edge : m_componentInfos[component].edges) {
+            //delete cycle edges, so they won't be checked more than once
+            auto &edges = m_componentInfos[component].edges;
+            auto splitIt = std::remove_if(edges.begin(), edges.end(),
+                    [&component, &minEdge, this](const Graph::Edge &edge) {
+                        return component == this->findRoot(edge.end());
+            });
+            edges.erase(splitIt, edges.end());
+            for (auto &edge : edges) {
                 LOGD("Boruvka: Checking edge (" << edge.begin() << ", " << edge.end() << ", "
                         << edge.value() << ") for component: " << component);
+
                 Graph::Vertex root = findRoot(edge.end());
-                if (component != root && edge.value() < minEdge.value()) {
+                if (edge.value() < minEdge.value()) {
                     componentRoot = component;
                     endRoot = root;
                     minEdge = edge;

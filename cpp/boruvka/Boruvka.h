@@ -10,6 +10,7 @@ namespace Algorithms {
 
 class Boruvka {
 public:
+    Boruvka() : m_vertexAmount(0) {}
     void setGraph(const Graph &graph);
     void prepareMST();
     Graph getMST();
@@ -24,6 +25,8 @@ private:
     Vector<ComponentInfo> m_componentInfos;
     List<Graph::Vertex> m_components;
     Vector<Graph::Edge> m_mstEdges;
+    Graph::NbhList m_graphEdges;
+    long int m_vertexAmount;
 };
 
 } /* namespace Algorithms */

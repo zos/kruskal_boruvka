@@ -71,7 +71,6 @@ public:
 
         reserve(v.size());
         copy(m_values, v.m_values, v.size());
-        LOG("Vector: " << m_size);
         return *this;
     }
     /*Vector& operator=(Vector &&v) {
