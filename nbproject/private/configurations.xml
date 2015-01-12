@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="95">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <df root="." name="0">
+      <df name="build">
+        <df name="CMakeFiles">
+          <df name="2.8.12.2">
+            <df name="CompilerIdC">
+              <in>CMakeCCompilerId.c</in>
+            </df>
+            <df name="CompilerIdCXX">
+              <in>CMakeCXXCompilerId.cpp</in>
+            </df>
+          </df>
+          <df name="CMakeTmp">
+          </df>
+        </df>
+        <df name="cpp">
+          <df name="profiler">
+            <df name="CMakeFiles">
+              <df name="kruskal-profiler.dir">
+                <df name="__">
+                  <df name="__">
+                    <df name="common">
+                      <df name="graph">
+                      </df>
+                      <df name="serializer">
+                      </df>
+                    </df>
+                  </df>
+                  <df name="kruskal">
+                  </df>
+                </df>
+              </df>
+            </df>
+          </df>
+          <df name="tests">
+            <df name="CMakeFiles">
+              <df name="boruvka-test.dir">
+                <df name="__">
+                  <df name="__">
+                    <df name="common">
+                      <df name="graph">
+                      </df>
+                      <df name="serializer">
+                      </df>
+                    </df>
+                  </df>
+                  <df name="boruvka">
+                  </df>
+                </df>
+              </df>
+              <df name="kruskal-test.dir">
+                <df name="__">
+                  <df name="__">
+                    <df name="common">
+                      <df name="graph">
+                      </df>
+                      <df name="serializer">
+                      </df>
+                    </df>
+                  </df>
+                  <df name="kruskal">
+                  </df>
+                </df>
+              </df>
+              <df name="list-test.dir">
+              </df>
+              <df name="mst-test.dir">
+                <df name="__">
+                  <df name="__">
+                    <df name="common">
+                      <df name="graph">
+                      </df>
+                      <df name="serializer">
+                      </df>
+                    </df>
+                  </df>
+                  <df name="boruvka">
+                  </df>
+                  <df name="kruskal">
+                  </df>
+                </df>
+              </df>
+              <df name="quicksort-test.dir">
+              </df>
+              <df name="vector-test.dir">
+              </df>
+            </df>
+          </df>
+        </df>
+        <df name="tools">
+          <df name="CMakeFiles">
+          </df>
+          <df name="generator">
+            <df name="CMakeFiles">
+              <df name="graph-generator.dir">
+                <df name="__">
+                  <df name="__">
+                    <df name="common">
+                      <df name="graph">
+                      </df>
+                      <df name="serializer">
+                      </df>
+                    </df>
+                  </df>
+                </df>
+              </df>
+            </df>
+          </df>
+        </df>
+      </df>
+      <df name="common">
+        <df name="graph">
+          <in>Graph.cpp</in>
+          <in>Graph.h</in>
+        </df>
+        <df name="log">
+          <in>Log.h</in>
+        </df>
+        <df name="serializer">
+          <in>GraphPrinter.cpp</in>
+          <in>GraphPrinter.h</in>
+          <in>GraphSerialization.cpp</in>
+          <in>GraphSerialization.h</in>
+        </df>
+      </df>
+      <df name="cpp">
+        <df name="boruvka">
+          <in>Boruvka.cpp</in>
+          <in>Boruvka.h</in>
+        </df>
+        <df name="containers">
+          <in>List.h</in>
+          <in>Vector.h</in>
+        </df>
+        <df name="kruskal">
+          <in>Kruskal.cpp</in>
+          <in>Kruskal.h</in>
+        </df>
+        <df name="profiler">
+          <in>kruskal_profiler.cpp</in>
+        </df>
+        <df name="sort">
+          <in>QuickSort.h</in>
+        </df>
+        <df name="tests">
+          <in>boruvka_test.cpp</in>
+          <in>kruskal_test.cpp</in>
+          <in>list_test.cpp</in>
+          <in>mst_test.cpp</in>
+          <in>quicksort_test.cpp</in>
+          <in>vector_test.cpp</in>
+        </df>
+      </df>
+      <df name="test_cases">
+      </df>
+      <df name="tools">
+        <df name="generator">
+          <in>GraphGenerator.cpp</in>
+          <in>GraphGenerator.h</in>
+          <in>generator.cpp</in>
+        </df>
+      </df>
+    </df>
+  </logicalFolder>
+  <projectmakefile>build/Makefile</projectmakefile>
+  <confs>
+    <conf name="Default" type="0">
+      <toolsSet>
+        <developmentServer>localhost</developmentServer>
+        <platform>2</platform>
+      </toolsSet>
+      <compile>
+        <compiledirpicklist>
+          <compiledirpicklistitem>.</compiledirpicklistitem>
+          <compiledirpicklistitem>${AUTO_FOLDER}</compiledirpicklistitem>
+        </compiledirpicklist>
+        <compiledir>${AUTO_FOLDER}</compiledir>
+        <compilecommandpicklist>
+          <compilecommandpicklistitem>${MAKE} ${ITEM_NAME}.o</compilecommandpicklistitem>
+          <compilecommandpicklistitem>${AUTO_COMPILE}</compilecommandpicklistitem>
+        </compilecommandpicklist>
+        <compilecommand>${AUTO_COMPILE}</compilecommand>
+      </compile>
+      <dbx_gdbdebugger version="1">
+        <gdb_pathmaps>
+        </gdb_pathmaps>
+        <gdb_interceptlist>
+          <gdbinterceptoptions gdb_all="false" gdb_unhandled="true" gdb_unexpected="true"/>
+        </gdb_interceptlist>
+        <gdb_options>
+          <DebugOptions>
+          </DebugOptions>
+        </gdb_options>
+        <gdb_buildfirst gdb_buildfirst_overriden="false" gdb_buildfirst_old="false"/>
+      </dbx_gdbdebugger>
+      <nativedebugger version="1">
+        <engine>gdb</engine>
+      </nativedebugger>
+      <runprofile version="9">
+        <runcommandpicklist>
+          <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
+        </runcommandpicklist>
+        <runcommand>"${OUTPUT_PATH}"</runcommand>
+        <rundir>build</rundir>
+        <buildfirst>false</buildfirst>
+        <terminal-type>0</terminal-type>
+        <remove-instrumentation>0</remove-instrumentation>
+        <environment>
+        </environment>
+      </runprofile>
+    </conf>
+  </confs>
+</configurationDescriptor>

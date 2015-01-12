@@ -1,0 +1,53 @@
+Scanning dependencies of target graph-generator
+[  3%] Building CXX object tools/generator/CMakeFiles/graph-generator.dir/__/__/common/graph/Graph.cpp.o
+[  6%] Building CXX object tools/generator/CMakeFiles/graph-generator.dir/__/__/common/serializer/GraphSerialization.cpp.o
+[ 10%] Building CXX object tools/generator/CMakeFiles/graph-generator.dir/__/__/common/serializer/GraphPrinter.cpp.o
+[ 13%] Building CXX object tools/generator/CMakeFiles/graph-generator.dir/GraphGenerator.cpp.o
+[ 17%] Building CXX object tools/generator/CMakeFiles/graph-generator.dir/generator.cpp.o
+Linking CXX executable graph-generator
+[ 17%] Built target graph-generator
+Scanning dependencies of target boruvka-test
+[ 20%] Building CXX object cpp/tests/CMakeFiles/boruvka-test.dir/__/__/common/graph/Graph.cpp.o
+[ 24%] Building CXX object cpp/tests/CMakeFiles/boruvka-test.dir/__/__/common/serializer/GraphPrinter.cpp.o
+[ 27%] Building CXX object cpp/tests/CMakeFiles/boruvka-test.dir/__/__/common/serializer/GraphSerialization.cpp.o
+[ 31%] Building CXX object cpp/tests/CMakeFiles/boruvka-test.dir/__/boruvka/Boruvka.cpp.o
+[ 34%] Building CXX object cpp/tests/CMakeFiles/boruvka-test.dir/boruvka_test.cpp.o
+Linking CXX executable boruvka-test
+[ 34%] Built target boruvka-test
+Scanning dependencies of target kruskal-test
+[ 37%] Building CXX object cpp/tests/CMakeFiles/kruskal-test.dir/__/__/common/graph/Graph.cpp.o
+[ 41%] Building CXX object cpp/tests/CMakeFiles/kruskal-test.dir/__/__/common/serializer/GraphPrinter.cpp.o
+[ 44%] Building CXX object cpp/tests/CMakeFiles/kruskal-test.dir/__/__/common/serializer/GraphSerialization.cpp.o
+[ 48%] Building CXX object cpp/tests/CMakeFiles/kruskal-test.dir/__/kruskal/Kruskal.cpp.o
+[ 51%] Building CXX object cpp/tests/CMakeFiles/kruskal-test.dir/kruskal_test.cpp.o
+Linking CXX executable kruskal-test
+[ 51%] Built target kruskal-test
+Scanning dependencies of target list-test
+[ 55%] Building CXX object cpp/tests/CMakeFiles/list-test.dir/list_test.cpp.o
+Linking CXX executable list-test
+[ 55%] Built target list-test
+Scanning dependencies of target mst-test
+[ 58%] Building CXX object cpp/tests/CMakeFiles/mst-test.dir/__/__/common/graph/Graph.cpp.o
+[ 62%] Building CXX object cpp/tests/CMakeFiles/mst-test.dir/__/__/common/serializer/GraphPrinter.cpp.o
+[ 65%] Building CXX object cpp/tests/CMakeFiles/mst-test.dir/__/__/common/serializer/GraphSerialization.cpp.o
+[ 68%] Building CXX object cpp/tests/CMakeFiles/mst-test.dir/__/kruskal/Kruskal.cpp.o
+[ 72%] Building CXX object cpp/tests/CMakeFiles/mst-test.dir/__/boruvka/Boruvka.cpp.o
+[ 75%] Building CXX object cpp/tests/CMakeFiles/mst-test.dir/mst_test.cpp.o
+Linking CXX executable mst-test
+[ 75%] Built target mst-test
+Scanning dependencies of target quicksort-test
+[ 79%] Building CXX object cpp/tests/CMakeFiles/quicksort-test.dir/quicksort_test.cpp.o
+Linking CXX executable quicksort-test
+[ 79%] Built target quicksort-test
+Scanning dependencies of target vector-test
+[ 82%] Building CXX object cpp/tests/CMakeFiles/vector-test.dir/vector_test.cpp.o
+Linking CXX executable vector-test
+[ 82%] Built target vector-test
+Scanning dependencies of target kruskal-profiler
+[ 86%] Building CXX object cpp/profiler/CMakeFiles/kruskal-profiler.dir/__/__/common/graph/Graph.cpp.o
+[ 89%] Building CXX object cpp/profiler/CMakeFiles/kruskal-profiler.dir/__/__/common/serializer/GraphPrinter.cpp.o
+[ 93%] Building CXX object cpp/profiler/CMakeFiles/kruskal-profiler.dir/__/__/common/serializer/GraphSerialization.cpp.o
+[ 96%] Building CXX object cpp/profiler/CMakeFiles/kruskal-profiler.dir/__/kruskal/Kruskal.cpp.o
+[100%] Building CXX object cpp/profiler/CMakeFiles/kruskal-profiler.dir/kruskal_profiler.cpp.o
+Linking CXX executable kruskal-profiler
+[100%] Built target kruskal-profiler
