@@ -221,14 +221,15 @@ public:
 
 private:
     void erase(T* from, T* to) {
-        unsigned to_erase = to- from;
-        auto ptr = from;
-        for (; ptr < m_values + m_size - to_erase; ptr++) {
-            *ptr = std::move(*(ptr + 1));
+        unsigned to_erase = to - from;
+        for (; to != m_values + m_size; ++from, ++to) {
+            *from = std::move(*(to));
         }
-        for (; ptr < m_values + m_size; ptr++) {
-            ptr->~T();
+
+        for (; from < to; ++from) {
+            from->~T();
         }
+
         m_size -= to_erase;
     }
 

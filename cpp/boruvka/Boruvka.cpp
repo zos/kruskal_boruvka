@@ -79,7 +79,7 @@ void Boruvka::prepareMST() {
         m_components.push_back(Graph::Vertex(i));
     }
 
-    //Copy edges, as we will be deleting those, wich will create cycles
+    //Copy edges, as we will be deleting those, which would create cycles
     for (auto &edgeList : m_graphEdges) {
         for (auto &edge : edgeList) {
             m_componentInfos[edge.begin()].edges.push_back(Graph::Edge::normalize(edge));

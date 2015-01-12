@@ -11,7 +11,6 @@ int main() {
 
     for (int i = 0; i < 10; i++)
         v.push_back(i);
-    LOG(v.size());
     assert(v.size() == 10);
     assert(v.capacity() == 16);
     assert(v.front() == 0);
@@ -35,6 +34,17 @@ int main() {
     for(unsigned i = 0; i < v.size(); i++) {
         assert(v[i] == -1);
     }
+
+    GIS::Vector<int> v2;
+    for (int i = 0; i < 20; i++)
+        v2.push_back(i);
+    v2.erase(v2.begin() + 10, v2.begin() + 15);
+    for (unsigned i = 0; i < v2.size(); i++)
+        LOG(v2[i]);
+    v2.erase(v2.begin() + 10, v2.end());
+    LOG("size: " << v2.size());
+    for (unsigned i = 0; i < v2.size(); i++)
+        LOG(v2[i]);
     LOG("SUCCESS!");
     return 0;
 }
