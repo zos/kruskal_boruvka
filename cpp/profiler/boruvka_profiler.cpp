@@ -1,7 +1,7 @@
 #include <graph/Graph.h>
 #include <serializer/GraphPrinter.h>
 #include <serializer/GraphSerialization.h>
-#include <kruskal/Kruskal.h>
+#include <boruvka/Boruvka.h>
 #include <log/Log.h>
 
 #include <chrono>
@@ -30,20 +30,21 @@ int main(int argc, char **argv) {
     }
 
     printGraph(graph, "Graph:");
-    Algorithms::Kruskal kruskal;
-    kruskal.setGraph(graph);
+    Algorithms::Boruvka boruvka;
+    boruvka.setGraph(graph);
+
     int loop = 100;
     if (graph.getVertexAmount() < 100) loop = 1000;
     if (graph.getVertexAmount() >= 1000) loop = 10;
 
     auto start = std::chrono::system_clock::now();
     for (int i = 0; i < loop; i++)
-        kruskal.prepareMST();
+        boruvka.prepareMST();
     auto end = std::chrono::system_clock::now();
 
 
     auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count()
-                          /(float)100;
+                              /(float)100;
     std::string unit = "ns";
     auto goodDuration = duration;
     if (duration > 1000000) {
@@ -55,7 +56,7 @@ int main(int argc, char **argv) {
                           /(float)100;
         unit = "mks";
     }
-    auto mst = kruskal.getMST();
+    auto mst = boruvka.getMST();
     printGraph(mst, "MST:");
     LOG("Repeats: " << loop);
     LOG("Duration of whole loop: "
