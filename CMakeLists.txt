@@ -17,7 +17,7 @@ ELSE()
     MESSAGE(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
 ENDIF()
 
-ADD_DEFINITIONS("-Werror -Wall -Wextra")
+ADD_DEFINITIONS("-Wall -Wextra")
 
 SET(TARGET_GENERATOR "graph-generator")
 SET(TARGET_KRUSKAL "kruskal-test")
