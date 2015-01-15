@@ -108,7 +108,7 @@ void Boruvka::prepareMST() {
             auto &edges = m_componentInfos[component].edges;
 
             //take the first one
-            for (int i = 0; i < edges.size(); i++) {
+            for (int i = 0; i < 1; i++) {
                 LOGD("Boruvka: Checking edge (" << edges[i].begin() << ", " << edges[i].end() << ", "
                         << edges[i].value() << ") for component: " << component);
 
