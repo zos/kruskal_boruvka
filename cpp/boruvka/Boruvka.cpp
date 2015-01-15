@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <sort/QuickSort.h>
 #include <log/Log.h>
+#include <assert.h>
 
 namespace GIS {
 namespace Algorithms {
@@ -82,7 +83,7 @@ void Boruvka::prepareMST() {
     //Copy edges, as we will be deleting those, which would create cycles
     for (auto &edgeList : m_graphEdges) {
         for (auto &edge : edgeList) {
-            m_componentInfos[edge.begin()].edges.push_back(Graph::Edge::normalize(edge));
+            m_componentInfos[edge.begin()].edges.push_back(edge);
         }
     }
 
@@ -100,24 +101,23 @@ void Boruvka::prepareMST() {
         Graph::Vertex componentRoot;
         Graph::Vertex endRoot;
         Graph::Edge minEdge(0, 0, std::numeric_limits<Graph::Value>::max());
+
         for (auto &component : m_components) {
             //this is NOT optimal
             //delete cycle edges, so they won't be checked more than once
             auto &edges = m_componentInfos[component].edges;
-            auto splitIt = std::remove_if(edges.begin(), edges.end(),
-                    [&component, &minEdge, this](const Graph::Edge &edge) {
-                        return component == this->findRoot(edge.end());
-            });
-            edges.erase(splitIt, edges.end());
-            for (auto &edge : edges) {
-                LOGD("Boruvka: Checking edge (" << edge.begin() << ", " << edge.end() << ", "
-                        << edge.value() << ") for component: " << component);
 
-                Graph::Vertex root = findRoot(edge.end());
-                if (edge.value() < minEdge.value()) {
-                    componentRoot = component;
+            //take the first one
+            for (int i = 0; i < edges.size(); i++) {
+                LOGD("Boruvka: Checking edge (" << edges[i].begin() << ", " << edges[i].end() << ", "
+                        << edges[i].value() << ") for component: " << component);
+
+                Graph::Vertex root = findRoot(edges[i].end());
+                if (edges[i].value() < minEdge.value() && component != root) {
+                    LOGD("Boruvka: saving minEdge (" << edges[i].begin() << ", " << edges[i].end() << ", " << edges[i].value() << ")");
+                    componentRoot = findRoot(component);
                     endRoot = root;
-                    minEdge = edge;
+                    minEdge = edges[i];
                     break;
                 }
             }
@@ -128,7 +128,19 @@ void Boruvka::prepareMST() {
             throw std::runtime_error("Graph not connected!");
         }
 
+
         findUnion(componentRoot, endRoot, minEdge);
+
+        auto splitIt = std::remove_if(m_componentInfos[componentRoot].edges.begin(),
+	                                  m_componentInfos[componentRoot].edges.end(),
+                                      [&componentRoot, this](const Graph::Edge &edge) {
+                                         if (componentRoot == this->findRoot(edge.end())) {
+                                             LOGD("Deleting (" << edge.begin() << ", " << edge.end() << ")");
+                                             return true;
+                                         }
+		                                 return false;
+                                     });
+		m_componentInfos[componentRoot].edges.erase(splitIt, m_componentInfos[componentRoot].edges.end());
         LOGI("Boruvka: Adding (" << minEdge.begin() << ", " << minEdge.end() << "," << minEdge.value() << ")");
         LOGD("Boruvka: Joining " << componentRoot << " and " << endRoot);
         m_mstEdges.push_back(minEdge);
