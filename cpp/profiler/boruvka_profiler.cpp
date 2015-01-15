@@ -44,23 +44,23 @@ int main(int argc, char **argv) {
 
 
     auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count()
-                              /(float)100;
+                              /(float)loop;
     std::string unit = "ns";
     auto goodDuration = duration;
     if (duration > 1000000) {
         goodDuration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count()
-                          /(float)100;
+                          /(float)loop;
         unit = "ms";
     } else if (duration > 1000) {
         goodDuration = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count()
-                          /(float)100;
+                          /(float)loop;
         unit = "mks";
     }
     auto mst = boruvka.getMST();
     printGraph(mst, "MST:");
     LOG("Repeats: " << loop);
     LOG("Duration of whole loop: "
-         << std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() << "ns");
+         << std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count() << "ns");
     LOG("Duration in ns: " << duration << "ns");
     LOG("Duration: " << goodDuration << " " << unit);
     return 0;
