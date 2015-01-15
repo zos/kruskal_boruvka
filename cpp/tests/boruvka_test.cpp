@@ -1,4 +1,5 @@
 #include <boruvka/Boruvka.h>
+#include <generator/GraphGenerator.h>
 #include <serializer/GraphPrinter.h>
 #include <serializer/GraphSerialization.h>
 #include <log/Log.h>
@@ -36,6 +37,11 @@ int main(int argc, char **argv) {
 
     if (mst.getEdgeAmount() + 1 != (long int)mst.getVertexAmount()) {
         LOG("Wrong amount of edges!");
+        return -1;
+    }
+
+    if (!GraphGenerator::isConnected(mst)) {
+        LOG("Graph is not connected!");
         return -1;
     }
 

@@ -36,6 +36,7 @@ public:
 
     GraphGenerator() : m_vertexAmount(0), m_edgeAmount(0), m_tries(0) {}
 
+    static bool isConnected(const Graph &graph);
     void setFile(const std::string &file) { m_file = file; }
     void setVertexAmount(std::size_t vertexAmount);
     void setEdgeAmount(std::size_t edgeAmount);
@@ -44,7 +45,7 @@ public:
     Graph generate();
 
 private:
-    bool isConnected(const Graph &graph);
+
     void saveToFile(const Graph &graph);
 
     std::string m_file;

@@ -7,12 +7,14 @@ SET(TEST_PATH ${PROJECT_SOURCE_DIR}/cpp/tests)
 INCLUDE_DIRECTORIES(
     ${COMMON_PATH}
     ${PROJECT_SOURCE_DIR}/cpp
+    ${PROJECT_SOURCE_DIR}/tools
     )
 
 SET(KRUSKAL_SOURCES
     ${COMMON_PATH}/graph/Graph.cpp
     ${COMMON_PATH}/serializer/GraphPrinter.cpp
     ${COMMON_PATH}/serializer/GraphSerialization.cpp
+    ${PROJECT_SOURCE_DIR}/tools/generator/GraphGenerator.cpp
     ${KRUSKAL_PATH}/Kruskal.cpp
     ${TEST_PATH}/kruskal_test.cpp
     )
@@ -21,6 +23,7 @@ SET(BORUVKA_SOURCES
     ${COMMON_PATH}/graph/Graph.cpp
     ${COMMON_PATH}/serializer/GraphPrinter.cpp
     ${COMMON_PATH}/serializer/GraphSerialization.cpp
+    ${PROJECT_SOURCE_DIR}/tools/generator/GraphGenerator.cpp
     ${BORUVKA_PATH}/Boruvka.cpp
     ${TEST_PATH}/boruvka_test.cpp
     )
